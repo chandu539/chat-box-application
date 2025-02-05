@@ -24,13 +24,13 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-purple-100">
+    <div className="min-h-screen bg-purple-100 overflow-clip">
       {/* Navbar */}
       <nav className="bg-purple-600 text-white p-4 flex justify-between items-center shadow-md">
         <h1 className="text-2xl font-semibold">Dashboard</h1>
         <div className="flex items-center space-x-6">
           <a href="/profile" className="hover:text-gray-300">Profile</a>
-          <a href="/settings" className="hover:text-gray-300">Settings</a>
+          
           <button
             onClick={handleLogout}
             className="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 transition"

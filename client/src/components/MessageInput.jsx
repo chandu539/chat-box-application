@@ -11,8 +11,16 @@ const MessageInput = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (!file.type.startsWith("image/")) {
-      toast.error("Please select an image file");
+
+    // Check if the file is an image and is one of the allowed formats
+    if (!file.type.startsWith("image/") || !["image/jpeg", "image/png"].includes(file.type)) {
+      toast.error("Please select a JPG, JPEG, or PNG image.");
+      return;
+    }
+
+    // Check if the file size is under 5MB
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("File size should not exceed 5MB.");
       return;
     }
 
@@ -48,22 +56,22 @@ const MessageInput = () => {
   };
 
   return (
-    <div className="p-4 w-full">
+    <div className="p-4 w-full bg-white">
       {imagePreview && (
         <div className="mb-3 flex items-center gap-2">
           <div className="relative">
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
+              className="w-20 h-20 object-cover rounded-lg border border-purple-500"
             />
             <button
               onClick={removeImage}
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300
+              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-purple-500
               flex items-center justify-center"
               type="button"
             >
-              <X className="size-3" />
+              <X className="size-3 text-white" />
             </button>
           </div>
         </div>
@@ -73,7 +81,7 @@ const MessageInput = () => {
         <div className="flex-1 flex gap-2">
           <input
             type="text"
-            className="w-full input input-bordered rounded-lg input-sm sm:input-md"
+            className="w-full input input-bordered bg-white rounded-lg input-sm sm:input-md border-purple-300 focus:outline-none focus:border-purple-500"
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -88,8 +96,8 @@ const MessageInput = () => {
 
           <button
             type="button"
-            className={`hidden sm:flex btn btn-circle
-                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+            className={`hidden sm:flex btn btn-circle bg-white
+                     ${imagePreview ? "text-emerald-500" : "text-purple-500"}`}
             onClick={() => fileInputRef.current?.click()}
           >
             <Image size={20} />
@@ -97,7 +105,7 @@ const MessageInput = () => {
         </div>
         <button
           type="submit"
-          className="btn btn-sm btn-circle"
+          className="btn btn-sm btn-circle bg-purple-500 text-white hover:bg-purple-700"
           disabled={!text.trim() && !imagePreview}
         >
           <Send size={22} />
@@ -106,4 +114,5 @@ const MessageInput = () => {
     </div>
   );
 };
+
 export default MessageInput;
